@@ -380,9 +380,9 @@ export const ACHIEVEMENTS_LIST: Achievement[] = [
   },
   {
     id: "oracle-agentic-ai",
-    title: "Oracle Agentic AI Foundations Associate",
-    description: "Certified by Oracle University (Aug 2026).",
-    date: "Aug 2026",
+    title: "Agentic AI Certified Foundations Associate",
+    description: "Certified by Oracle University (October 2026).",
+    date: "October 2026",
     issuer: "Oracle University",
     category: "Certification",
     credentialBadge: "Foundations Associate"
