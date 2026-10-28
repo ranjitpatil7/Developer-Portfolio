@@ -53,7 +53,7 @@ export const PERSONAL_DETAILS = {
   phone: "+91 8767751737",
   email: "ranjitpatilsknscoecomp@gmail.com",
   github: "https://github.com/ranjitpatil7",
-  linkedin: "https://www.linkedin.com/in/ranjit-patil-3236b72a4",
+  linkedin: "https://www.linkedin.com/in/ranjit-patil-cse",
   fullStackResumeUrl: "/Ranjit_Patil_Full_Stack_Resume.pdf",
   javaResumeUrl: "/Ranjit_Patil_Java_Developer_Resume.pdf",
 };

@@ -81,5 +81,5 @@ npm run preview
 
 - **Email:** [ranjitpatilsknscoecomp@gmail.com](mailto:ranjitpatilsknscoecomp@gmail.com)
 - **Mobile / WhatsApp:** +91 8767751737
-- **LinkedIn:** [linkedin.com/in/ranjit-patil-3236b72a4](https://www.linkedin.com/in/ranjit-patil-3236b72a4)
+- **LinkedIn:** [linkedin.com/in/ranjit-patil-cse](https://www.linkedin.com/in/ranjit-patil-cse)
 - **GitHub:** [github.com/ranjitpatil7](https://github.com/ranjitpatil7)
