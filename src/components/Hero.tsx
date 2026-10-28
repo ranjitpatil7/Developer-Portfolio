@@ -11,7 +11,8 @@ import {
   Database,
   Cpu,
   Radio,
-  ChevronDown
+  ChevronDown,
+  Calendar
 } from 'lucide-react';
 import { PERSONAL_DETAILS, HERO_COPY } from '../data/portfolioData';
 
@@ -20,6 +21,7 @@ interface HeroProps {
   setActiveLens: (lens: 'all' | 'fullstack' | 'java') => void;
   triggerToast: (msg: string) => void;
   onOpenResumeModal?: (type: 'fullstack' | 'java') => void;
+  onOpenRecruiterModal?: () => void;
 }
 
 interface ArchFlow {
@@ -160,6 +162,7 @@ export const Hero: React.FC<HeroProps> = ({
   setActiveLens,
   triggerToast,
   onOpenResumeModal,
+  onOpenRecruiterModal,
 }) => {
   const [activeArchIndex, setActiveArchIndex] = useState(0);
   const [pulseCount, setPulseCount] = useState(1);
@@ -426,6 +429,29 @@ export const Hero: React.FC<HeroProps> = ({
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Recruiter 30s View Button */}
+            {onOpenRecruiterModal && (
+              <button
+                onClick={onOpenRecruiterModal}
+                className="px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/35 text-emerald-300 text-sm font-semibold transition-all flex items-center gap-2 shadow-sm"
+              >
+                <Zap className="w-4 h-4 text-emerald-400" />
+                <span>⚡ Recruiter 30s View</span>
+              </button>
+            )}
+
+            {/* Schedule 15-Min Intro Call */}
+            <a
+              href={PERSONAL_DETAILS.scheduleMeetingUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => triggerToast('Opening Cal.com scheduler for 15-min intro')}
+              className="px-4 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium transition-colors flex items-center gap-2"
+            >
+              <Calendar className="w-4 h-4 text-cyan-400" />
+              <span>Book 15m Call</span>
+            </a>
 
             <a
               href="#contact"

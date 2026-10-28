@@ -13,7 +13,9 @@ import {
   Check,
   FolderGit2,
   Sparkles,
-  Command
+  Command,
+  Calendar,
+  Zap
 } from 'lucide-react';
 import { PERSONAL_DETAILS, PROJECTS } from '../data/portfolioData';
 
@@ -24,6 +26,7 @@ interface CommandPaletteProps {
   setActiveLens: (lens: 'all' | 'fullstack' | 'java') => void;
   triggerToast: (msg: string) => void;
   onOpenResumeModal?: (type: 'fullstack' | 'java') => void;
+  onOpenRecruiterModal?: () => void;
 }
 
 interface PaletteAction {
@@ -43,6 +46,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   setActiveLens,
   triggerToast,
   onOpenResumeModal,
+  onOpenRecruiterModal,
 }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -118,7 +122,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       },
     },
 
-    // Resumes
+    // Resumes & Recruiter Mode
+    {
+      id: 'recruiter-quick-view',
+      title: '⚡ Open Recruiter 30-Second Executive Summary',
+      subtitle: 'Instant candidate breakdown, key metrics, and fast-track actions',
+      category: 'Resumes',
+      icon: <Zap className="w-4 h-4 text-emerald-400" />,
+      onSelect: () => {
+        onClose();
+        if (onOpenRecruiterModal) onOpenRecruiterModal();
+      },
+    },
     {
       id: 'resume-preview-fullstack',
       title: 'Preview Full-Stack Resume In-Browser',
@@ -229,6 +244,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     })),
 
     // Social & Contact
+    {
+      id: 'action-schedule-call',
+      title: '📅 Schedule 15-Minute Technical Intro Call',
+      subtitle: 'Open instant Cal.com appointment booking page',
+      category: 'Social & Contact',
+      icon: <Calendar className="w-4 h-4 text-cyan-400" />,
+      onSelect: () => {
+        window.open(PERSONAL_DETAILS.scheduleMeetingUrl, '_blank');
+        triggerToast('Opening Cal.com meeting scheduler');
+        onClose();
+      },
+    },
     {
       id: 'action-copy-email',
       title: `Copy Email: ${PERSONAL_DETAILS.email}`,

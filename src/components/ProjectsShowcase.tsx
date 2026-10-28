@@ -5,7 +5,9 @@ import {
   ExternalLink,
   ChevronDown,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Zap,
+  TrendingUp
 } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
 import type { Project } from '../data/portfolioData';
@@ -231,11 +233,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           ))}
         </div>
 
-        {/* Architecture Flow Toggle Button */}
+        {/* Architecture Flow & Trade-Offs Toggle Button */}
         <div className="mb-5">
           <button
             onClick={onToggleArch}
-            className={`w-full py-2 px-3 rounded-xl border transition-all flex items-center justify-between text-xs font-mono ${
+            className={`w-full py-2.5 px-3.5 rounded-xl border transition-all flex items-center justify-between text-xs font-mono ${
               isArchOpen
                 ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
                 : 'bg-white/5 border-white/8 text-neutral-300 hover:bg-white/10'
@@ -243,7 +245,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           >
             <span className="flex items-center gap-2">
               <Layers className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isArchOpen ? 'Hide Architecture Pipeline' : 'Inspect Architecture Pipeline'}</span>
+              <span>{isArchOpen ? 'Hide Architecture & Trade-Offs' : 'Inspect Pipeline & Engineering Trade-Offs'}</span>
             </span>
             <ChevronDown
               className={`w-4 h-4 transition-transform duration-200 ${
@@ -252,7 +254,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             />
           </button>
 
-          {/* Expandable Architecture Drawer */}
+          {/* Expandable Architecture & Trade-Offs Drawer */}
           <AnimatePresence>
             {isArchOpen && (
               <motion.div
@@ -262,44 +264,91 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <div className="mt-3 p-3.5 rounded-2xl bg-black/50 border border-white/10 space-y-3">
-                  <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
-                    Pipeline Architecture Under The Hood
-                  </div>
+                <div className="mt-3 p-4 rounded-2xl bg-black/60 border border-white/10 space-y-4">
+                  <div>
+                    <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Pipeline Architecture Under The Hood</span>
+                    </div>
 
-                  {/* Flow Nodes Pipeline */}
-                  <div className="flex flex-col sm:flex-row flex-wrap items-center gap-2">
-                    {project.architectureNodes.map((node, nodeIdx) => (
-                      <React.Fragment key={node.label}>
-                        <div className="flex-1 min-w-[130px] p-2 rounded-xl bg-white/5 border border-white/8 flex flex-col">
-                          <div className="flex items-center gap-1.5 mb-1">
-                            <span
-                              className="w-2 h-2 rounded-full shrink-0"
-                              style={{ backgroundColor: getNodeColor(node.type) }}
-                            />
-                            <span className="text-[11px] font-semibold text-neutral-200 truncate">
-                              {node.label}
-                            </span>
+                    {/* Flow Nodes Pipeline */}
+                    <div className="flex flex-col sm:flex-row flex-wrap items-center gap-2">
+                      {project.architectureNodes.map((node, nodeIdx) => (
+                        <React.Fragment key={node.label}>
+                          <div className="flex-1 min-w-[130px] p-2.5 rounded-xl bg-white/5 border border-white/8 flex flex-col">
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span
+                                className="w-2 h-2 rounded-full shrink-0"
+                                style={{ backgroundColor: getNodeColor(node.type) }}
+                              />
+                              <span className="text-[11px] font-semibold text-neutral-200 truncate">
+                                {node.label}
+                              </span>
+                            </div>
+                            {node.sublabel && (
+                              <span className="text-[9px] font-mono text-neutral-400 truncate">
+                                {node.sublabel}
+                              </span>
+                            )}
                           </div>
-                          {node.sublabel && (
-                            <span className="text-[9px] font-mono text-neutral-400 truncate">
-                              {node.sublabel}
-                            </span>
+                          {nodeIdx < project.architectureNodes.length - 1 && (
+                            <div className="hidden sm:block text-neutral-600 font-mono text-xs">
+                              &rarr;
+                            </div>
                           )}
-                        </div>
-                        {nodeIdx < project.architectureNodes.length - 1 && (
-                          <div className="hidden sm:block text-neutral-600 font-mono text-xs">
-                            &rarr;
-                          </div>
-                        )}
-                      </React.Fragment>
-                    ))}
+                        </React.Fragment>
+                      ))}
+                    </div>
+
+                    {/* Architecture Summary String */}
+                    <div className="mt-2.5 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/20 text-[11px] font-mono text-emerald-400/90 leading-relaxed">
+                      <strong>Flow:</strong> {project.architectureSummary}
+                    </div>
                   </div>
 
-                  {/* Architecture Summary String from Section 3 */}
-                  <div className="p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/20 text-[11px] font-mono text-emerald-400/90 leading-relaxed">
-                    <strong>Flow:</strong> {project.architectureSummary}
-                  </div>
+                  {/* System Design & Trade-Offs Deep Dive */}
+                  {project.caseStudy && (
+                    <div className="pt-3 border-t border-white/10 space-y-3">
+                      <div className="text-[10px] font-mono uppercase tracking-wider text-amber-400 flex items-center gap-1.5 font-bold">
+                        <TrendingUp className="w-3.5 h-3.5" />
+                        <span>System Design &amp; Concurrency Trade-Offs</span>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <div className="p-2.5 rounded-xl bg-red-500/[0.04] border border-red-500/20">
+                          <span className="text-red-400 font-semibold block mb-0.5">The Engineering Challenge:</span>
+                          <p className="text-neutral-300 leading-relaxed">{project.caseStudy.challenge}</p>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-amber-500/[0.04] border border-amber-500/20">
+                          <span className="text-amber-400 font-semibold block mb-0.5">Trade-Offs &amp; Bottlenecks Investigated:</span>
+                          <p className="text-neutral-300 leading-relaxed">{project.caseStudy.tradeOffs}</p>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/20">
+                          <span className="text-emerald-400 font-semibold block mb-0.5">Engineered Production Fix:</span>
+                          <p className="text-neutral-300 leading-relaxed">{project.caseStudy.solution}</p>
+                        </div>
+                      </div>
+
+                      {/* Quantifiable Metrics Badges */}
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        {project.caseStudy.metrics.map((metric, mIdx) => (
+                          <div
+                            key={mIdx}
+                            className="p-2 rounded-xl bg-[#0f111d] border border-white/8 flex flex-col justify-between"
+                          >
+                            <span className="text-[10px] font-mono text-neutral-400 truncate">
+                              {metric.label}
+                            </span>
+                            <span className="text-xs font-mono font-bold text-emerald-300 mt-0.5">
+                              {metric.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}

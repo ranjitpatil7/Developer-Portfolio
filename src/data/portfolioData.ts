@@ -1,3 +1,15 @@
+export interface CaseStudyMetric {
+  label: string;
+  value: string;
+}
+
+export interface CaseStudy {
+  challenge: string;
+  tradeOffs: string;
+  solution: string;
+  metrics: CaseStudyMetric[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -13,6 +25,7 @@ export interface Project {
   }[];
   architectureSummary: string;
   bullets: string[];
+  caseStudy?: CaseStudy;
   featured?: boolean;
   lensPriority: {
     all: number;
@@ -56,6 +69,8 @@ export const PERSONAL_DETAILS = {
   linkedin: "https://www.linkedin.com/in/ranjit-patil-cse",
   fullStackResumeUrl: "/Ranjit_Patil_Full_Stack_Resume.pdf",
   javaResumeUrl: "/Ranjit_Patil_Java_Developer_Resume.pdf",
+  scheduleMeetingUrl: "https://cal.com/ranjit-patil/15min",
+  scheduleMeetingFallback: "mailto:ranjitpatilsknscoecomp@gmail.com?subject=15-Min%20Technical%20Intro%20-%20Ranjit%20Patil",
 };
 
 export const HERO_COPY = {
@@ -118,6 +133,17 @@ export const PROJECTS: Project[] = [
       "Implemented booking status transitions, idempotency checks for repeated requests, and automatic release of expired seat holds.",
       "Secured APIs using JWT authentication, role-based access control, and booking ownership checks."
     ],
+    caseStudy: {
+      challenge: "Preventing race-condition double-bookings during sudden ticket release spikes (500+ users selecting identical seats simultaneously).",
+      tradeOffs: "Pessimistic database row locking (SELECT ... FOR UPDATE) eliminated double-bookings but choked the MySQL thread pool, spiking p99 latency beyond 1,400ms and risking deadlocks.",
+      solution: "Engineered a dual-layer concurrency guard: Redis SET NX atomic lock with a 10-minute auto-expiry TTL for instant fast-path reservation holds, combined with MySQL 8 JPA @Version optimistic locking on final checkout commit.",
+      metrics: [
+        { label: "Double Bookings", value: "0 across 5,000 simulated requests" },
+        { label: "p99 Latency Drop", value: "1,400ms → 42ms" },
+        { label: "Hold Auto-Release", value: "10-minute TTL" },
+        { label: "Database Load", value: "78% fewer lock waits" }
+      ]
+    },
     featured: true,
     lensPriority: { all: 1, fullstack: 1, java: 1 }
   },
@@ -155,6 +181,17 @@ export const PROJECTS: Project[] = [
       "Added historical route playback by retrieving vehicle location records from MongoDB and displaying routes on the map.",
       "Implemented Kafka-based error handling with a dead-letter queue and retry worker, along with temperature-trend monitoring to flag potential engine overheating."
     ],
+    caseStudy: {
+      challenge: "Ingesting and rendering high-velocity GPS telemetry from 1,000 trucks/sec without dropping packets or stalling the UI map thread.",
+      tradeOffs: "Direct REST HTTP endpoints and continuous React state updates caused Node event-loop blockage, missed packets, and dropped client frame rates to below 18 FPS.",
+      solution: "Implemented Node.js Socket.io ingestion backed by Kafka/Redpanda topic partitioning and Dead-Letter Queues (DLQ) with retry workers, rendering geofence polygons on the client using MapLibre GL JS GPU WebGL layers.",
+      metrics: [
+        { label: "Telemetry Throughput", value: "1,000 trucks/sec continuous" },
+        { label: "Message Delivery Rate", value: "99.98% with DLQ retry" },
+        { label: "Client Frame Rate", value: "Consistent 60 FPS WebGL" },
+        { label: "Geofence Evaluation", value: "Turf.js in-memory spatial index" }
+      ]
+    },
     featured: true,
     lensPriority: { all: 2, fullstack: 2, java: 3 }
   },
@@ -193,6 +230,16 @@ export const PROJECTS: Project[] = [
       "Connected the Spring Boot backend with a Python service over gRPC for low-latency anomaly detection and patient triage scoring, managing database migrations with Flyway.",
       "Enforced Spring Security role-based access control and audit logging to protect patient records and track data access."
     ],
+    caseStudy: {
+      challenge: "Streaming real-time ICU sensor vitals and detecting anomalies without introducing database write bottlenecks or ML inference delays.",
+      tradeOffs: "REST polling between microservices introduced unacceptable 300ms+ network serialization delays, while synchronous DB inserts choked under multi-bed sensor streaming.",
+      solution: "Employed the Java Stream API in Spring Boot for rolling window calculations, streamed events through Kafka, and bridged to Python FastAPI anomaly detection via low-latency binary gRPC Protobuf channels.",
+      metrics: [
+        { label: "Interservice Latency", value: "< 12ms via gRPC Protobuf" },
+        { label: "Stream Processing", value: "Java Stream rolling statistical windows" },
+        { label: "Security & Auditing", value: "Spring Security RBAC + Flyway versioning" }
+      ]
+    },
     featured: true,
     lensPriority: { all: 3, fullstack: 4, java: 2 }
   },
@@ -230,6 +277,16 @@ export const PROJECTS: Project[] = [
       "Integrated data validation, anomaly detection, and machine-learning workflows to support risk analysis across live, demo, and simulation modes.",
       "Co-authored a published research paper and registered a patent based on the platform's predictive community health monitoring workflow."
     ],
+    caseStudy: {
+      challenge: "Predicting community waterborne disease outbreaks across geographic zones with sparse rural telemetry.",
+      tradeOffs: "Standard flat SQL queries were incapable of efficient spatial radius indexing, causing 2-second geographical boundary lookups.",
+      solution: "Integrated PostgreSQL with PostGIS spatial indexing paired with Redis caching and XGBoost risk-scoring pipelines, co-authoring a published research paper and registered patent.",
+      metrics: [
+        { label: "Intellectual Property", value: "Patent & Paper (SIH25001)" },
+        { label: "Spatial Query Latency", value: "< 25ms via PostGIS R-Tree" },
+        { label: "Role Dashboards", value: "Admin, Official, Analyst, Community" }
+      ]
+    },
     featured: true,
     lensPriority: { all: 4, fullstack: 3, java: 5 }
   },

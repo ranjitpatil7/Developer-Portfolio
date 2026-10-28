@@ -12,6 +12,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
 import { ResumeModal } from './components/ResumeModal';
+import { RecruiterModal } from './components/RecruiterModal';
 import { TerminalDrawer } from './components/TerminalDrawer';
 import { ToastContainer } from './components/Toast';
 import type { ToastMessage } from './components/Toast';
@@ -23,11 +24,16 @@ export function App() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
   const [resumeModalType, setResumeModalType] = useState<'fullstack' | 'java'>('fullstack');
+  const [recruiterModalOpen, setRecruiterModalOpen] = useState(false);
 
   // Resume Modal Opener
   const handleOpenResumeModal = (type: 'fullstack' | 'java' = 'fullstack') => {
     setResumeModalType(type);
     setResumeModalOpen(true);
+  };
+
+  const handleOpenRecruiterModal = () => {
+    setRecruiterModalOpen(true);
   };
 
   // Toast trigger helper
@@ -100,6 +106,7 @@ export function App() {
           setActiveLens={setActiveLens}
           triggerToast={triggerToast}
           onOpenResumeModal={handleOpenResumeModal}
+          onOpenRecruiterModal={handleOpenRecruiterModal}
         />
 
         {/* 3D Bento Grid: About, Internship Status, Patent/Paper, Infinite Marquee, Academics */}
@@ -140,6 +147,7 @@ export function App() {
         setActiveLens={setActiveLens}
         triggerToast={triggerToast}
         onOpenResumeModal={handleOpenResumeModal}
+        onOpenRecruiterModal={handleOpenRecruiterModal}
       />
 
       {/* In-Browser PDF Resume Preview Modal */}
@@ -147,6 +155,14 @@ export function App() {
         isOpen={resumeModalOpen}
         onClose={() => setResumeModalOpen(false)}
         initialType={resumeModalType}
+        triggerToast={triggerToast}
+      />
+
+      {/* Recruiter 30-Second Executive Summary Modal */}
+      <RecruiterModal
+        isOpen={recruiterModalOpen}
+        onClose={() => setRecruiterModalOpen(false)}
+        onOpenResumeModal={handleOpenResumeModal}
         triggerToast={triggerToast}
       />
 
