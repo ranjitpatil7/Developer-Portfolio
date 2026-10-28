@@ -221,7 +221,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
                     </p>
                   </div>
                   <a
-                    href="https://github.com/ranjitpatil7/IOT-Fleet-Management-Microservices"
+                    href="https://github.com/ranjitpatil7/IOT-Fleet-Management-Microservices."
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 text-cyan-400 border border-white/10 flex items-center gap-1.5 text-xs font-mono shrink-0 transition-colors"

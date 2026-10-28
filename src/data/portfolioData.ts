@@ -153,7 +153,7 @@ export const PROJECTS: Project[] = [
     subtitle: "IoT Fleet Management Platform",
     year: "2026",
     categoryTags: ["Full-Stack & Real-Time"],
-    githubUrl: "https://github.com/ranjitpatil7/IOT-Fleet-Management-Microservices",
+    githubUrl: "https://github.com/ranjitpatil7/IOT-Fleet-Management-Microservices.",
     techStack: [
       "React",
       "JavaScript",
