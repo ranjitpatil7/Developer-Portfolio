@@ -27,6 +27,7 @@ interface CommandPaletteProps {
   triggerToast: (msg: string) => void;
   onOpenResumeModal?: (type: 'fullstack' | 'java') => void;
   onOpenRecruiterModal?: () => void;
+  onOpenScheduleModal?: () => void;
 }
 
 interface PaletteAction {
@@ -47,6 +48,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   triggerToast,
   onOpenResumeModal,
   onOpenRecruiterModal,
+  onOpenScheduleModal,
 }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -247,13 +249,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'action-schedule-call',
       title: '📅 Schedule 15-Minute Technical Intro Call',
-      subtitle: 'Open instant Cal.com appointment booking page',
+      subtitle: 'Propose a time window and discuss full-time/intern roles',
       category: 'Social & Contact',
       icon: <Calendar className="w-4 h-4 text-cyan-400" />,
       onSelect: () => {
-        window.open(PERSONAL_DETAILS.scheduleMeetingUrl, '_blank');
-        triggerToast('Opening Cal.com meeting scheduler');
         onClose();
+        if (onOpenScheduleModal) {
+          onOpenScheduleModal();
+        } else {
+          window.open(PERSONAL_DETAILS.scheduleMeetingFallback, '_blank');
+        }
       },
     },
     {

@@ -17,6 +17,7 @@ interface RecruiterModalProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenResumeModal: (type: 'fullstack' | 'java') => void;
+  onOpenScheduleModal?: () => void;
   triggerToast: (msg: string) => void;
 }
 
@@ -24,6 +25,7 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
   isOpen,
   onClose,
   onOpenResumeModal,
+  onOpenScheduleModal,
   triggerToast,
 }) => {
   const copyEmail = () => {
@@ -233,16 +235,16 @@ export const RecruiterModal: React.FC<RecruiterModalProps> = ({
               {/* Action Buttons Row */}
               <div className="pt-2 flex flex-wrap items-center gap-2.5">
                 {/* 15-Minute Intro Call */}
-                <a
-                  href={PERSONAL_DETAILS.scheduleMeetingUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => triggerToast('Opening Cal.com meeting scheduler')}
+                <button
+                  onClick={() => {
+                    onClose();
+                    if (onOpenScheduleModal) onOpenScheduleModal();
+                  }}
                   className="flex-1 min-w-[200px] py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Book 15-Min Intro Call</span>
-                </a>
+                </button>
 
                 {/* Preview Full Stack Resume */}
                 <button

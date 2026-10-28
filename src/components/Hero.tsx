@@ -22,6 +22,7 @@ interface HeroProps {
   triggerToast: (msg: string) => void;
   onOpenResumeModal?: (type: 'fullstack' | 'java') => void;
   onOpenRecruiterModal?: () => void;
+  onOpenScheduleModal?: () => void;
 }
 
 interface ArchFlow {
@@ -163,6 +164,7 @@ export const Hero: React.FC<HeroProps> = ({
   triggerToast,
   onOpenResumeModal,
   onOpenRecruiterModal,
+  onOpenScheduleModal,
 }) => {
   const [activeArchIndex, setActiveArchIndex] = useState(0);
   const [pulseCount, setPulseCount] = useState(1);
@@ -442,16 +444,23 @@ export const Hero: React.FC<HeroProps> = ({
             )}
 
             {/* Schedule 15-Min Intro Call */}
-            <a
-              href={PERSONAL_DETAILS.scheduleMeetingUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => triggerToast('Opening Cal.com scheduler for 15-min intro')}
-              className="px-4 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium transition-colors flex items-center gap-2"
-            >
-              <Calendar className="w-4 h-4 text-cyan-400" />
-              <span>Book 15m Call</span>
-            </a>
+            {onOpenScheduleModal ? (
+              <button
+                onClick={onOpenScheduleModal}
+                className="px-4 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium transition-colors flex items-center gap-2"
+              >
+                <Calendar className="w-4 h-4 text-cyan-400" />
+                <span>Book 15m Call</span>
+              </button>
+            ) : (
+              <a
+                href={PERSONAL_DETAILS.scheduleMeetingFallback}
+                className="px-4 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium transition-colors flex items-center gap-2"
+              >
+                <Calendar className="w-4 h-4 text-cyan-400" />
+                <span>Book 15m Call</span>
+              </a>
+            )}
 
             <a
               href="#contact"
