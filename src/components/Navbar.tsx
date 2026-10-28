@@ -174,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }}
                       className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors mb-1"
                     >
-                      <span>👁 Preview In-Browser</span>
+                      <span>Preview In-Browser</span>
                     </button>
                   )}
 

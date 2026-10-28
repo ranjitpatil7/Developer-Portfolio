@@ -127,7 +127,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     // Resumes & Recruiter Mode
     {
       id: 'recruiter-quick-view',
-      title: '⚡ Open Recruiter 30-Second Executive Summary',
+      title: 'Open Recruiter 30-Second Executive Summary',
       subtitle: 'Instant candidate breakdown, key metrics, and fast-track actions',
       category: 'Resumes',
       icon: <Zap className="w-4 h-4 text-emerald-400" />,
@@ -248,7 +248,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     // Social & Contact
     {
       id: 'action-schedule-call',
-      title: '📅 Schedule 15-Minute Technical Intro Call',
+      title: 'Schedule 15-Minute Technical Intro Call',
       subtitle: 'Propose a time window and discuss full-time/intern roles',
       category: 'Social & Contact',
       icon: <Calendar className="w-4 h-4 text-cyan-400" />,
